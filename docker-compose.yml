@@ -1,16 +1,14 @@
-version: '3.8'
-
 services:
   # Selenium Hub
   selenium-hub:
     image: selenium/hub:4.18.1
     container_name: selenium-hub
     ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
+      - '4442:4442'
+      - '4443:4443'
+      - '4444:4444'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:4444/wd/hub/status']
       interval: 10s
       timeout: 5s
       retries: 5
