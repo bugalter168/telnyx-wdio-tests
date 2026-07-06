@@ -56,6 +56,7 @@ class HomePage extends BasePage {
     await this.navPricingButton.click();
     await this.navPricingLink.waitForClickable({ timeout: 5000 });
     await this.navPricingLink.click();
+    await browser.pause(1000);
     await this.waitForPageLoad();
   }
 
