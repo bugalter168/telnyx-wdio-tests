@@ -56,8 +56,10 @@ class HomePage extends BasePage {
     await this.navPricingButton.click();
     await this.navPricingLink.waitForClickable({ timeout: 5000 });
     await this.navPricingLink.click();
-    await browser.pause(1000);
-    await this.waitForPageLoad();
+    await browser.waitUntil(async () => (await browser.getUrl()).includes('pricing'), {
+      timeout: 10000,
+      timeoutMsg: 'URL did not change to /pricing',
+    });
   }
 
   async getHeroHeadingText() {
