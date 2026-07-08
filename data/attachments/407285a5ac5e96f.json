@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "[class*=\"error\"], [class*=\"invalid\"], [role=\"alert\"]"
+}

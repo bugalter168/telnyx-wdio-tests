@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "[data-radix-popper-content-wrapper] a[href=\"/pricing\"]"
+}
