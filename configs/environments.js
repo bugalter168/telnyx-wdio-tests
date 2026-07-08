@@ -1,11 +1,11 @@
 const environments = {
   dev: {
-    baseUrl: 'dev.telnyx.com',
+    baseUrl: 'https://dev.telnyx.com',
     apiUrl: 'https://api.telnyx.com',
     env: 'dev',
   },
   staging: {
-    baseUrl: 'staging.telnyx.com',
+    baseUrl: 'https://staging.telnyx.com',
     apiUrl: 'https://api.telnyx.com',
     env: 'staging',
   },

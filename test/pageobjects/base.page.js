@@ -32,7 +32,15 @@ class BasePage {
 
   async scrollToBottom() {
     await browser.execute(() => window.scrollTo(0, document.body.scrollHeight));
-    await browser.pause(500);
+    await browser.waitUntil(
+      async () => {
+        const before = await browser.execute(() => document.body.scrollHeight);
+        await browser.execute(() => window.scrollTo(0, document.body.scrollHeight));
+        const after = await browser.execute(() => document.body.scrollHeight);
+        return before === after;
+      },
+      { timeout: 5000, timeoutMsg: 'Page kept growing while scrolling' }
+    );
   }
 }
 

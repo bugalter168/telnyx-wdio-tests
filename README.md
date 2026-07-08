@@ -1,10 +1,10 @@
 # Telnyx WebdriverIO Test Suite
 
-E2E тести для сайту [telnyx.com](https://telnyx.com) на базі WebdriverIO 9 + Mocha + Allure Report.
+E2E tests for [telnyx.com](https://telnyx.com) built with WebdriverIO 9 + Mocha + Allure Report.
 
 ---
 
-## Встановлення
+## Installation
 
 ```bash
 npm install
@@ -12,28 +12,28 @@ npm install
 
 ---
 
-## Запуск тестів
+## Running tests
 
-| Команда | Опис |
+| Command | Description |
 |---|---|
-| `npm test` | Всі тести (Chrome headless) |
-| `npm run test:chrome` | Тільки Chrome |
-| `npm run test:firefox` | Тільки Firefox |
-| `npm run test:edge` | Тільки Edge |
-| `npm run test:file -- --spec test/specs/home.spec.js` | Один файл |
+| `npm test` | All tests (Chrome headless) |
+| `npm run test:chrome` | Chrome only |
+| `npm run test:firefox` | Firefox only |
+| `npm run test:edge` | Edge only |
+| `npm run test:file -- --spec test/specs/home.spec.js` | A single spec file |
 
 ---
 
 ## Allure Report
 
 ```bash
-# Генерувати звіт
+# Generate the report
 npm run allure:generate
 
-# Відкрити у браузері
+# Open it in the browser
 npm run allure:open
 
-# Обидва кроки разом
+# Both steps at once
 npm run allure:report
 ```
 
@@ -41,29 +41,32 @@ npm run allure:report
 
 ## Cross-environment
 
-Встанови змінну `TEST_ENV` перед запуском:
+Set the `TEST_ENV` variable before running:
 
 ```bash
 TEST_ENV=staging npm test
 TEST_ENV=dev npm test
-TEST_ENV=prod npm test   # за замовчуванням
+TEST_ENV=prod npm test   # default
 ```
 
 ---
 
 ## Docker
 
-### Локальний запуск
+### Local run
 
 ```bash
-# Запустити з Selenium Grid + Chrome + Firefox
+# Start Selenium Grid + Chrome + Firefox
 docker compose up --abort-on-container-exit
 
-# Із конкретним середовищем
+# With a specific environment
 TEST_ENV=staging docker compose up
 ```
 
-### Зупинити
+When `HUB_URL` is set (as in `docker-compose.yml`), the runner routes sessions to the
+Selenium Grid hub; without it, tests run against a locally managed driver.
+
+### Stop
 
 ```bash
 docker compose down
@@ -73,21 +76,21 @@ docker compose down
 
 ## GitHub Actions + GitHub Pages
 
-Pipeline запускається автоматично при push у `main`.  
-Allure Report публікується на **GitHub Pages**: `https://<username>.github.io/<repo>/`
+The pipeline runs automatically on every push to `main`.
+The Allure Report is published to **GitHub Pages**: `https://<username>.github.io/<repo>/`
 
-### Налаштування GitHub Pages (один раз):
-1. Зайди в Settings → Pages
+### One-time GitHub Pages setup:
+1. Go to Settings → Pages
 2. Source: **Deploy from a branch**
 3. Branch: **gh-pages** / root
 
 ---
 
-## Структура проекту
+## Project structure
 
 ```
 ├── configs/
-│   ├── environments.js         # URL для dev/staging/prod
+│   ├── environments.js         # URLs for dev/staging/prod
 │   ├── wdio.chrome.conf.js
 │   ├── wdio.firefox.conf.js
 │   └── wdio.edge.conf.js
@@ -98,12 +101,12 @@ Allure Report публікується на **GitHub Pages**: `https://<username
 │   │   ├── pricing.page.js
 │   │   └── signup.page.js
 │   └── specs/
-│       ├── home.spec.js        # 10 тестів
-│       ├── pricing.spec.js     # 10 тестів
-│       └── signup.spec.js      # 15 тестів
+│       ├── home.spec.js        # 10 tests
+│       ├── pricing.spec.js     # 10 tests
+│       └── signup.spec.js      # 15 tests
 ├── .github/workflows/ci.yml
 ├── Dockerfile
 ├── docker-compose.yml
-├── wdio.conf.js                # базовий конфіг
+├── wdio.conf.js                # base config
 └── package.json
 ```

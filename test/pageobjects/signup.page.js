@@ -17,7 +17,7 @@ class SignupPage extends BasePage {
     return $('button[type="submit"]');
   }
   get loginLink() {
-    return $('a[href*="login"], a[href*="sign-in"]');
+    return $('a[href*="portal.telnyx.com"]');
   }
   get emailError() {
     return $(
@@ -96,25 +96,6 @@ class SignupPage extends BasePage {
   async isSubmitButtonEnabled() {
     const btn = await this.submitButton;
     return btn.isEnabled();
-  }
-
-  async getTermsLinkText() {
-    const terms = await this.termsLink;
-    const exists = await terms.isExisting();
-    if (exists) return terms.getText();
-    return null;
-  }
-
-  async getPrivacyLinkText() {
-    const privacy = await this.privacyLink;
-    const exists = await privacy.isExisting();
-    if (exists) return privacy.getText();
-    return null;
-  }
-
-  async isLoginLinkExisting() {
-    const link = await this.loginLink;
-    return link.isExisting();
   }
 }
 

@@ -65,19 +65,15 @@ describe('Telnyx Pricing Page', () => {
     }
   });
 
-  it('should display "Contact sales" or "Contact us" link', async () => {
-    const contactBtn = await pricingPage.contactSalesButton;
-    const isVisible = await contactBtn.isDisplayed();
-    if (isVisible) {
-      await expect(contactBtn).toBeDisplayed();
-    }
+  it('should display "Contact us" link', async () => {
+    const link = await pricingPage.getVisibleContactUsLink();
+    expect(link).not.toBeNull();
+    await expect(link).toBeDisplayed();
   });
 
-  it('should have pricing tabs with correct role attribute', async () => {
-    const role = await pricingPage.getFirstTabRole();
-    if (role !== null) {
-      expect(role).toBe('tab');
-    }
+  it('should display all product pricing sub-page links', async () => {
+    const links = await pricingPage.pricingLinks;
+    expect(links.length).toBeGreaterThanOrEqual(19);
   });
 
   it('should have pricing sub-page links with valid href', async () => {

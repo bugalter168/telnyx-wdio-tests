@@ -4,8 +4,16 @@ import { getEnvironmentConfig } from './configs/environments.js';
 const env = process.env.TEST_ENV || 'prod';
 const envConfig = getEnvironmentConfig(env);
 
+const hub = process.env.HUB_URL ? new URL(process.env.HUB_URL) : null;
+
 export const config = {
   runner: 'local',
+  ...(hub && {
+    protocol: hub.protocol.replace(':', ''), // http
+    hostname: hub.hostname, // selenium-hub
+    port: Number(hub.port) || 4444, // 4444
+    path: hub.pathname, // /wd/hub
+  }),
   specs: ['./test/specs/**/*.spec.js'],
   exclude: [],
   maxInstances: 3,

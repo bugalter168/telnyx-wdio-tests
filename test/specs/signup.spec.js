@@ -37,16 +37,13 @@ describe('Telnyx Sign Up Page', () => {
   });
 
   it('should display a link to the login page', async () => {
-    const exists = await signupPage.isLoginLinkExisting();
-    if (exists) {
-      const link = await signupPage.loginLink;
-      await expect(link).toBeDisplayed();
-    }
+    await signupPage.loginLink.waitForDisplayed({ timeout: 15000 });
+    await expect(signupPage.loginLink).toBeDisplayed();
   });
 
   it('should show error when submitting empty form', async () => {
     await signupPage.submit();
-    await browser.pause(1000);
+    await signupPage.formErrors[0].waitForDisplayed({ timeout: 5000 });
     const errors = await signupPage.getErrorMessages();
     expect(errors.length).toBeGreaterThan(0);
   });
@@ -54,9 +51,11 @@ describe('Telnyx Sign Up Page', () => {
   it('should show error for invalid email format', async () => {
     await signupPage.fillEmail('not-an-email');
     await signupPage.submit();
-    await browser.pause(1000);
-    const validity = await signupPage.isEmailValid();
-    expect(validity).toBe(false);
+    await browser.waitUntil(async () => (await signupPage.isEmailValid()) === false, {
+      timeout: 5000,
+      timeoutMsg: 'Email did not become invalid',
+    });
+    expect(await signupPage.isEmailValid()).toBe(false);
   });
 
   it('should allow typing a valid email without immediate error', async () => {
@@ -77,17 +76,13 @@ describe('Telnyx Sign Up Page', () => {
   });
 
   it('should display Terms of Service link', async () => {
-    const text = await signupPage.getTermsLinkText();
-    if (text !== null) {
-      expect(text.toLowerCase()).toMatch(/terms/i);
-    }
+    await expect(signupPage.termsLink).toBeDisplayed();
+    await expect(signupPage.termsLink).toHaveText(/terms/i);
   });
 
   it('should display Privacy Policy link', async () => {
-    const text = await signupPage.getPrivacyLinkText();
-    if (text !== null) {
-      expect(text.toLowerCase()).toMatch(/privacy/i);
-    }
+    await expect(signupPage.privacyLink).toBeDisplayed();
+    await expect(signupPage.privacyLink).toHaveText(/privacy/i);
   });
 
   it('should have email field with email type attribute', async () => {

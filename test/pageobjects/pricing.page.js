@@ -5,14 +5,11 @@ class PricingPage extends BasePage {
     return $('h1, [class*="hero"] h1, [class*="pricing"] h1');
   }
 
-  get pricingTabs() {
-    return $$('[class*="tab"], [role="tab"]');
-  }
   get pricingLinks() {
     return $$('main a[href*="/pricing/"]');
   }
-  get contactSalesButton() {
-    return $('main a[href*="contact"]');
+  get contactUsLink() {
+    return $('header a[href*="contact-us"]');
   }
 
   async open() {
@@ -25,16 +22,18 @@ class PricingPage extends BasePage {
     return heading.getText();
   }
 
+  async getVisibleContactUsLink() {
+    const links = await $$('header a[href*="contact-us"]');
+    for (const link of links) {
+      if (await link.isDisplayed()) return link;
+    }
+    return null;
+  }
+
   async getPricingCard(href) {
     const card = await $(`main a[href="${href}"]`);
     await card.scrollIntoView();
     return card;
-  }
-
-  async getFirstTabRole() {
-    const tabs = await this.pricingTabs;
-    if (tabs.length > 0) return tabs[0].getAttribute('role');
-    return null;
   }
 
   async getFirstPricingLinkHref() {

@@ -35,10 +35,9 @@ class HomePage extends BasePage {
 
   async acceptCookiesIfPresent() {
     try {
-      const banner = await this.cookieBanner;
-      if (await banner.isDisplayed()) {
+      if (await this.cookieBanner.isDisplayed()) {
         await this.cookieAccept.click();
-        await browser.pause(500);
+        await this.cookieBanner.waitForDisplayed({ reverse: true, timeout: 5000 });
       }
     } catch {}
   }
